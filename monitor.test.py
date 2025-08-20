@@ -1,6 +1,3 @@
-import unittest
-from StringCalculator import stringCalculator
-
 class CalculatorTest(unittest.TestCase):
     def test_empty_string(self):
         ##Empty sting will return 0
@@ -31,17 +28,19 @@ class CalculatorTest(unittest.TestCase):
         self.assertEqual(stringCalculator('//[***]\n1***2***3'),6)
     def test_negative_values(self):
         ##Throw exceptions when negative number is parsed
-        self.assertEqual(stringCalculator('-3'),'negatives not allowed: -3')
-        self.assertEqual(stringCalculator('-3,4,-8'),'negatives not allowed: -3,-8')
+        with self.assertRaises(ValueError) as context:
+            stringCalculator('-3')
+        self.assertIn("negatives not allowed: -3", str(context.exception))
+        
+        with self.assertRaises(ValueError) as context:
+            stringCalculator('-3,4,-8')
+        self.assertIn("negatives not allowed: -3,-8", str(context.exception))
+
+       # self.assertEqual(stringCalculator('-3,4,-8'),'negatives not allowed: -3,-8')
     def test_greater_than_thousand_value(self):
         ##Numbers bigger than 1000 are ignored
         self.assertEqual(stringCalculator('4,1002'),4)
         self.assertEqual(stringCalculator('9,1,1000'),10)
     def test_complex_delimiters(self):
         self.assertEqual(stringCalculator("//[abc]\n1abc2abc3"),6)
-        self.assertEqual(stringCalculator("/[***][%%]\n1***2%%3"),6)
-        
-
-
-if __name__ == '__main__':
-  unittest.main()
+        self.assertEqual(stringCalculator("//[***][%%]\n1***2%%3"),6)
