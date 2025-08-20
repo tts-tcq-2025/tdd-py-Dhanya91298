@@ -1,3 +1,6 @@
+import unittest
+from StringCalculator import stringCalculator
+
 class CalculatorTest(unittest.TestCase):
     def test_empty_string(self):
         ##Empty sting will return 0
