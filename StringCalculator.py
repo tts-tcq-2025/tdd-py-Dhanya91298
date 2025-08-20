@@ -1,31 +1,73 @@
 import re
 
-def stringCalculator(numbers: str) -> int:
-    if not numbers:
+def stringCalculator(numbers: str) -> int | bool:
+    if numbers is None or numbers.strip() == "":
         return 0
 
-    delimiter, numbers_part = _extract_delimiter(numbers)
-    tokens = re.split(delimiter, numbers_part)
+    delimiters = [",", "\n"]
 
-    nums = [int(t) for t in tokens if t.strip()]
+    if numbers.startswith("//"):
+        delimiter_part, numbers = numbers.split("\n", 1)
+        delimiters = []
+        matches = re.findall(r"\[(.*?)\]", delimiter_part)
+        if matches:
+            delimiters.extend(matches)
+        else:
+            delimiters.append(delimiter_part[2:])  # single char delimiter
+
+    regex_pattern = "|".join(map(re.escape, delimiters))
+    tokens = re.split(regex_pattern, numbers)
+
+    # return False for malformed input
+    if any(tok.strip() == "" for tok in tokens):
+        return False
+
+    nums = [int(tok) for tok in tokens]
 
     negatives = [n for n in nums if n < 0]
     if negatives:
-        raise Exception(f"negatives not allowed: {','.join(map(str, negatives))}")
+        raise ValueError("negatives not allowed: " + ",".join(map(str, negatives)))
 
-    return sum(n for n in nums if n <= 1000)
+    return sum(n for n in nums if n < 1000)
 
 
-def _extract_delimiter(numbers: str) -> tuple[str, str]:
+
+
+
+# ---------- small helpers (procedural, single responsibility) ----------
+
+def _extract_delimiter(numbers):
+    """
+    Returns (split_regex, numbers_part).
+    Uses non-capturing groups in the regex so re.split returns only tokens.
+    """
     if numbers.startswith("//"):
         header, body = numbers.split("\n", 1)
-        delimiters = _parse_delimiters(header[2:])
-        regex = "|".join(map(re.escape, delimiters))
-        return regex, body
-    else:
-        return r"[,\n]", numbers
+        decl = header[2:]  # after //
+        # find bracketed delimiters like [***] or [*][%]
+        bracketed = re.findall(r'\[(.*?)\]', decl)
+        if bracketed:
+            delims = [d for d in bracketed if d != ""]
+        else:
+            # single-char (or unbracketed multi-char) delimiter declaration
+            delims = [decl] if decl != "" else []
 
-def _parse_delimiters(delim_decl: str) -> list[str]:
-    if delim_decl.startswith("[") and delim_decl.endswith("]"):
-        return re.findall(r"\[(.*?)\]", delim_decl)
-    return [delim_decl]
+        # keep default separators as well (comma and newline)
+        all_delims = [d for d in delims] + [",", "\n"]
+        return _build_split_regex(all_delims), body
+    else:
+        return _build_split_regex([",", "\n"]), numbers
+
+
+def _build_split_regex(delimiters):
+    """
+    Build a non-capturing alternation regex to be used with re.split.
+    Sort by length descending so longer delimiters are matched first.
+    E.g. ['***', ',', '\n'] -> r'(?:\*\*\*|,|\n)'
+    """
+    # keep empty delimiters out
+    delimiters = [d for d in delimiters if d is not None and d != ""]
+    sorted_delims = sorted(delimiters, key=len, reverse=True)
+    escaped = [re.escape(d) for d in sorted_delims]
+    pattern = r'(?:' + "|".join(escaped) + r')'
+    return pattern
