@@ -9,7 +9,7 @@ class CalculatorTest(unittest.TestCase):
         ##Return the single value itself
         self.assertEqual(stringCalculator('3'),3)
         self.assertEqual(stringCalculator('47'),47)
-        self.assertEqual(string;Calculator('123'),123)
+        self.assertEqual(stringCalculator('123'),123)
     def test_double_value(self):
         ##Return sum when 2 numbers are passed
         self.assertEqual(stringCalculator('100,3'),103)
