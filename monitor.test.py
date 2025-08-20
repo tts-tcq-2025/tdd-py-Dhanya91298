@@ -18,7 +18,7 @@ class CalculatorTest(unittest.TestCase):
         ##Return sum when unknown number of inputs are passed
         self.assertEqual(stringCalculator('1,2,3'),6)
         self.assertEqual(stringCalculator('1,2,3,4,5,6,7,8,9,10'),55)
-     def test_newline_in_value(self):
+    def test_newline_in_value(self):
         ##Return sum when newline is separating the numbers
         self.assertEqual(stringCalculator('1\n2,3'),6)
         self.assertEqual(stringCalculator('5\n10\n15'),30)
