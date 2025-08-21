@@ -38,7 +38,7 @@ Start Test-driven approach
 # Test specification
 # String Calculator Specification
 
-## Rules & Expected Behavior
+## Rules & Expected Behavior in Gherkin language
 
 | **Scenario**                                      | **Input**        | **Expected Output**                     |
 |---------------------------------------------------|------------------|-----------------------------------------|
