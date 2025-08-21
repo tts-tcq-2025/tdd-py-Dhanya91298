@@ -45,3 +45,4 @@ Start Test-driven approach
 7. Return sum when single-character/multi-character custom delimiter is separating the numbers
 8. Throw exceptions when negative number is parsed
 9. Sum must be returned for all values less than 1000 only
+10. For invalid input (eg: "1,\n") then return False
