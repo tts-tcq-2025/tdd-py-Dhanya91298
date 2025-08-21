@@ -33,3 +33,15 @@ Start Test-driven approach
 1. Write the smallest possible failing test: give input `"" assert output to be 0 ` .
 2. Write the minimum amount of code that'll make it pass.
 3. Refactor any assumptions, continue to pass this test. Do not add any code without a corresponding test.
+
+
+# Test specification
+1. Empty string input returns 0
+2. Single value input returns the same value itself
+3. Return sum when 2 numbers are passed when separated by comma
+4. Return sum when 2 numbers are passed when separated by newline
+5. Return sum even when unknown number of inputs are passed separated by comma
+6. Return sum even when unknown number of inputs are passed separated by newline
+7. Return sum when single-character/multi-character custom delimiter is separating the numbers
+8. Throw exceptions when negative number is parsed
+9. Sum must be returned for all values less than 1000 only
