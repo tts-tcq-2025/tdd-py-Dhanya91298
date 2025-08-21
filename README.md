@@ -36,13 +36,55 @@ Start Test-driven approach
 
 
 # Test specification
-1. Empty string input returns 0
-2. Single value input returns the same value itself
-3. Return sum when 2 numbers are passed when separated by comma
-4. Return sum when 2 numbers are passed when separated by newline
-5. Return sum even when unknown number of inputs are passed separated by comma
-6. Return sum even when unknown number of inputs are passed separated by newline
-7. Return sum when single-character/multi-character custom delimiter is separating the numbers
-8. Throw exceptions when negative number is parsed
-9. Sum must be returned for all values less than 1000 only
-10. For invalid input (eg: "1,\n") then return False
+Feature: String Calculator
+
+  Scenario: Empty string input returns 0
+    Given the input is ""
+    When I calculate the sum
+    Then the result should be 0
+
+  Scenario: Single value input returns the same value itself
+    Given the input is "5"
+    When I calculate the sum
+    Then the result should be 5
+
+  Scenario: Return sum when 2 numbers are passed separated by comma
+    Given the input is "2,3"
+    When I calculate the sum
+    Then the result should be 5
+
+  Scenario: Return sum when 2 numbers are passed separated by newline
+    Given the input is "2\n3"
+    When I calculate the sum
+    Then the result should be 5
+
+  Scenario: Return sum when unknown number of inputs are passed separated by comma
+    Given the input is "1,2,3,4,5"
+    When I calculate the sum
+    Then the result should be 15
+
+  Scenario: Return sum when unknown number of inputs are passed separated by newline
+    Given the input is "1\n2\n3\n4\n5"
+    When I calculate the sum
+    Then the result should be 15
+
+  Scenario: Return sum when custom delimiter separates the numbers
+    Given the input is "//;\n1;2;3"
+    When I calculate the sum
+    Then the result should be 6
+
+  Scenario: Throw exception when negative number is parsed
+    Given the input is "2,-4,3"
+    When I calculate the sum
+    Then an exception should be thrown with message "negatives not allowed: -4"
+
+  Scenario: Ignore numbers greater than or equal to 1000
+    Given the input is "2,1000,1001,6"
+    When I calculate the sum
+    Then the result should be 1008
+
+  Scenario: Return False for invalid input
+    Given the input is "1,\n"
+    When I calculate the sum
+    Then the result should be False
+
