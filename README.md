@@ -33,3 +33,27 @@ Start Test-driven approach
 1. Write the smallest possible failing test: give input `"" assert output to be 0 ` .
 2. Write the minimum amount of code that'll make it pass.
 3. Refactor any assumptions, continue to pass this test. Do not add any code without a corresponding test.
+
+
+# Test specification
+# String Calculator Specification
+
+## Rules & Expected Behavior in Gherkin language
+
+# String Calculator Specification
+
+## Test Cases
+
+| **Test Case ID** | **Test Case Name**             | **Scenario**                                   | **Test Case Input**  | **Expected Output**                     |
+|------------------|--------------------------------|------------------------------------------------|----------------------|-----------------------------------------|
+| TC001            | Empty Input Returns Zero       | Empty string input returns 0                   | `""`                 | `0`                                     |
+| TC002            | Single Value Returns Itself    | Single value input returns the same value      | `"5"`                | `5`                                     |
+| TC003            | Two Numbers Comma Separated    | Sum when 2 numbers separated by comma          | `"2,3"`              | `5`                                     |
+| TC004            | Two Numbers Newline Separated  | Sum when 2 numbers separated by newline        | `"2\n3"`             | `5`                                     |
+| TC005            | Multiple Numbers Comma         | Sum when unknown numbers separated by comma    | `"1,2,3,4,5"`        | `15`                                    |
+| TC006            | Multiple Numbers Newline       | Sum when unknown numbers separated by newline  | `"1\n2\n3\n4\n5"`    | `15`                                    |
+| TC007            | Custom Delimiter               | Sum with custom delimiter (single/multi-char)  | `"//;\n1;2;3"`       | `6`                                     |
+| TC008            | Negative Number Exception      | Throw exception on negative numbers            | `"2,-4,3"`           | Exception: `"negatives not allowed: -4"`|
+| TC009            | Ignore Numbers ≥ 1000          | Ignore numbers >= 1000                         | `"2,1000,1001,6"`    | `1008`                                  |
+| TC010            | Invalid Input Returns False    | Return False for invalid input                 | `"1,\n"`             | `False`                                 |
+
