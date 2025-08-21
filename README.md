@@ -36,55 +36,19 @@ Start Test-driven approach
 
 
 # Test specification
-Feature: String Calculator
+# String Calculator Specification
 
-  Scenario: Empty string input returns 0
-    Given the input is ""
-    When I calculate the sum
-    Then the result should be 0
+## Rules & Expected Behavior
 
-  Scenario: Single value input returns the same value itself
-    Given the input is "5"
-    When I calculate the sum
-    Then the result should be 5
-
-  Scenario: Return sum when 2 numbers are passed separated by comma
-    Given the input is "2,3"
-    When I calculate the sum
-    Then the result should be 5
-
-  Scenario: Return sum when 2 numbers are passed separated by newline
-    Given the input is "2\n3"
-    When I calculate the sum
-    Then the result should be 5
-
-  Scenario: Return sum when unknown number of inputs are passed separated by comma
-    Given the input is "1,2,3,4,5"
-    When I calculate the sum
-    Then the result should be 15
-
-  Scenario: Return sum when unknown number of inputs are passed separated by newline
-    Given the input is "1\n2\n3\n4\n5"
-    When I calculate the sum
-    Then the result should be 15
-
-  Scenario: Return sum when custom delimiter separates the numbers
-    Given the input is "//;\n1;2;3"
-    When I calculate the sum
-    Then the result should be 6
-
-  Scenario: Throw exception when negative number is parsed
-    Given the input is "2,-4,3"
-    When I calculate the sum
-    Then an exception should be thrown with message "negatives not allowed: -4"
-
-  Scenario: Ignore numbers greater than or equal to 1000
-    Given the input is "2,1000,1001,6"
-    When I calculate the sum
-    Then the result should be 1008
-
-  Scenario: Return False for invalid input
-    Given the input is "1,\n"
-    When I calculate the sum
-    Then the result should be False
-
+| **Scenario**                                      | **Input**        | **Expected Output**                     |
+|---------------------------------------------------|------------------|-----------------------------------------|
+| Empty string input returns 0                      | `""`             | `0`                                     |
+| Single value input returns the same value itself  | `"5"`            | `5`                                     |
+| Sum when 2 numbers separated by comma             | `"2,3"`          | `5`                                     |
+| Sum when 2 numbers separated by newline           | `"2\n3"`         | `5`                                     |
+| Sum when unknown numbers separated by comma       | `"1,2,3,4,5"`    | `15`                                    |
+| Sum when unknown numbers separated by newline     | `"1\n2\n3\n4\n5"`| `15`                                    |
+| Sum with custom delimiter (single/multi-char)     | `"//;\n1;2;3"`   | `6`                                     |
+| Throw exception on negative numbers               | `"2,-4,3"`       | Exception: `"negatives not allowed: -4"`|
+| Ignore numbers >= 1000                            | `"2,1000,1001,6"`| `1008`                                  |
+| Return False for invalid input                    | `"1,\n"`         | `False`                                 |
